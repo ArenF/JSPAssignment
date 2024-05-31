@@ -1,0 +1,231 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header {
+    background-color: white;
+    display: flex;
+    font-family: Pretendard-Regular;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20%;
+    padding-right: 20%;
+    color: #4DA8D5;
+}
+
+.header_item {
+    display: flex;
+    gap: 16px;
+}
+
+.all {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content_main {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+}
+
+.loginform {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 64px;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-radius: 16px;
+    gap:16px;
+    box-shadow: 5px 5px 5px #5F5F5F;
+}
+
+input::placeholder {
+    font-size: 20px;
+    color: gray;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+    border:none;
+    font-size: 20px;
+    font-family: Pretendard-Regular;
+}
+
+input:focus {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #95D3FF;
+    font-size: 20px;
+    font-family: Pretendard-Regular;
+}
+
+.login {
+    color: #95D3FF;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.sign_up_a {
+    text-align: right;
+    color: gray;
+}
+
+.submit_button {
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    background-color: #95D3FF;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.submit_button_2 {
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    background-color: #95D3FF;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.header_button {
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    background-color: white;
+    color: gray;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+  
+.header_button:hover {
+    color: white;
+    background: #95D3FF;
+}
+
+.header_button_login {
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #95D3FF;
+    margin-left: 32px;
+}
+
+.header_button_login:hover {
+    color: white;
+    background: #95D3FF;
+}
+
+body {
+    margin: 0;
+    background-color: #5F5F5F;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+.todoform {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    border-radius: 16px;
+    box-shadow: 5px 5px 5px #5F5F5F;
+}
+
+.todobutton_box {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    margin-right: 32px;
+    margin-bottom: 12px;
+}
+
+.todobutton_del {
+    border: 0;
+    outline: 0;
+    font-size: 20px;
+    color: white;
+    background-color: gray;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.todobutton_add {
+    border: 0;
+    outline: 0;
+    font-size: 20px;
+    color: white;
+    background-color: #95D3FF;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.todoitem {
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.content_todo {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    justify-content: center;
+    padding-left: 20%;
+    padding-right: 20%;
+    background-color: gray;
+}
+
+.todo_checkbox {
+    width: 32px;
+    margin-right: 16px;
+}
+
+.todo_input {
+    width: 80%;
+    display: flex;
+    margin-right: 16px;
+}
