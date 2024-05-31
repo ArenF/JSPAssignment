@@ -50,3 +50,5 @@ w
 G.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d,b\4\b4a0b63ce8560bbc5de0f9995c20cc861dc2adb3
 w
 G.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e,a\e\ae9ddf453f55affea2d6b9e3973cac1eb2efb4e1
+7
+LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
