@@ -52,3 +52,5 @@ w
 G.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e,a\e\ae9ddf453f55affea2d6b9e3973cac1eb2efb4e1
 7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
+S
+#.idea/runConfigurations/Tomcat_.xml,6\8\6895759aeba69d498384d976167d9ba3501b5e51
