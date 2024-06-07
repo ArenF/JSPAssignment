@@ -23,15 +23,29 @@
 
 ### JDBC 실행하기
 ```java
-Class.forName("org.sqlite.JDBC");
-Connection conn = DriverManager.getConnection("jdbc:sqlite:[작업 파일 경로]/identifier.sqlite");
-Statement stat = conn.createStatement();
 
-ResultSet rs = stat.executeQuery("select * from member;");
-while (rs.next()) {
-    out.println("name = " + rs.getString("name"));
-    out.println("<BR>");
+// JDBC 실행하기 위한 설정들
+Class.forName("org.sqlite.JDBC");
+Connection conn = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+Statement statement = conn.createStatement();
+
+// 작업할 SQL들
+ResultSet query = statement.executeQuery("SELECT * FROM member");
+
+while (query.next()) {
+    int id = qr.getInt("ID");
+    String name = qr.getString("NAME");
+    String email = qr.getString("EMAIL");
+    String password = qr.getString("PASSWORD");
+
+    out.println("id : " +
+                id + "\n" +
+                "name : " +
+                name + "\n" +
+                "email : " +
+                email + "\n" +
+                "password : " +
+                password + "\n"
+    );
 }
-rs.close();
-conn.close();
 ```
