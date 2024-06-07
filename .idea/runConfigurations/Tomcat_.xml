@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Tomcat " type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat " ALTERNATIVE_JRE_ENABLED="false">
+  <configuration default="false" name="Tomcat " type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 1" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="corretto-21">
     <option name="UPDATING_POLICY" value="update-resources" />
     <deployment>
       <artifact name="Gradle : dev.aren : JSPAssignment-1.0-SNAPSHOT.war (exploded)">
         <settings>
-          <option name="CONTEXT_PATH" value="/Gradle___dev_aren___JSPAssignment_1_0_SNAPSHOT_war__exploded_" />
+          <option name="CONTEXT_PATH" value="/" />
         </settings>
       </artifact>
     </deployment>
