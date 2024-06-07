@@ -33,10 +33,10 @@ Statement statement = conn.createStatement();
 ResultSet query = statement.executeQuery("SELECT * FROM member");
 
 while (query.next()) {
-    int id = qr.getInt("ID");
-    String name = qr.getString("NAME");
-    String email = qr.getString("EMAIL");
-    String password = qr.getString("PASSWORD");
+    int id = query.getInt("ID");
+    String name = query.getString("NAME");
+    String email = query.getString("EMAIL");
+    String password = query.getString("PASSWORD");
 
     out.println("id : " +
                 id + "\n" +
@@ -47,5 +47,8 @@ while (query.next()) {
                 "password : " +
                 password + "\n"
     );
+    query.close();
+    statement.close();
+    conn.close();
 }
 ```
