@@ -54,3 +54,7 @@ G.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e,a\e\ae
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
 S
 #.idea/runConfigurations/Tomcat_.xml,6\8\6895759aeba69d498384d976167d9ba3501b5e51
+;
+gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
+7
+gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
