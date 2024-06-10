@@ -39,13 +39,13 @@
                 </a>
             </div>
         </div>
-    
+
         <div class="content_main">
             <button type="button" class="header_button">
                 중앙버튼
             </button>
         </div>
     </div>
-    
+
 </body>
 </html>

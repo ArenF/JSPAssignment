@@ -9,10 +9,82 @@
     <title>ToDo List</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // 창이 닫힐 때 데이터를 서버에 전송하는 함수
-        window.onbeforeunload = function() {
-            saveDataToServer();
-        };
+        function validateDeadline(input) {
+            const regex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
+            if (!regex.test(input.value)) {
+                alert("날짜/시간 형식은 YYYY-MM-DD hh:mm이어야 합니다.");
+                input.value = "";
+            }
+        }
+
+        function handleInput(event) {
+            const input = event.target;
+            const value = input.value;
+            const regex = /^[0-9-:\s]*$/;
+            if (!regex.test(value)) {
+                alert("날짜/시간 형식은 YYYY-MM-DD hh:mm이어야 합니다.");
+                input.value = "";
+                return;
+            }
+
+            input.value = formatDeadlineInput(value);
+        }
+
+        function formatDeadlineInput(value) {
+            const cleanValue = value.replace(/[^\d]/g, "");
+            let formattedValue = "";
+
+            if (cleanValue.length >= 4) {
+                formattedValue += cleanValue.substring(0, 4) + "-";
+            } else {
+                formattedValue += cleanValue;
+            }
+            if (cleanValue.length >= 6) {
+                formattedValue += cleanValue.substring(4, 6) + "-";
+            } else if (cleanValue.length > 4) {
+                formattedValue += cleanValue.substring(4);
+            }
+            if (cleanValue.length >= 8) {
+                formattedValue += cleanValue.substring(6, 8) + " ";
+            } else if (cleanValue.length > 6) {
+                formattedValue += cleanValue.substring(6);
+            }
+            if (cleanValue.length >= 10) {
+                formattedValue += cleanValue.substring(8, 10) + ":";
+            } else if (cleanValue.length > 8) {
+                formattedValue += cleanValue.substring(8);
+            }
+            if (cleanValue.length >= 12) {
+                formattedValue += cleanValue.substring(10, 12);
+            } else if (cleanValue.length > 10) {
+                formattedValue += cleanValue.substring(10);
+            }
+
+            return formattedValue;
+        }
+
+        function addTodo() {
+            const todoItems = document.querySelector('.todoitems');
+            const newTodo = document.createElement('div');
+            newTodo.classList.add('todoitem');
+            newTodo.innerHTML = `
+                <input type="checkbox" class="todo_checkbox">
+                <input type="text" class="todo_input" placeholder="할 일을 입력하세요">
+                <input type="text" class="deadline_input" placeholder="YYYY-MM-DD hh:mm" oninput="handleInput(event)">
+            `;
+            todoItems.appendChild(newTodo);
+        }
+
+        function deleteTodo() {
+            const todoItems = document.querySelector('.todoitems');
+            const todos = todoItems.querySelectorAll('.todoitem');
+            todos.forEach(todo => {
+                const checkbox = todo.querySelector('.todo_checkbox');
+                if (checkbox.checked) {
+                    todoItems.removeChild(todo);
+                }
+            });
+        }
 
         function saveDataToServer() {
             const todoItems = document.querySelectorAll('.todoitem');
@@ -30,32 +102,17 @@
                 }
             });
 
-            // AJAX 요청을 사용하여 서버로 데이터를 전송
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'todo_info.jsp', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(todoData));
-        }
 
-        function addTodo() {
-            const todoItems = document.querySelector('.todoitems');
-            const newTodo = document.createElement('div');
-            newTodo.classList.add('todoitem');
-            newTodo.innerHTML = `
-                <input type="checkbox" class="todo_checkbox">
-                <input type="text" class="todo_input" placeholder="할 일을 입력하세요">
-                <input type="text" class="deadline_input" placeholder="날짜/시간을 입력하세요">
-            `;
-            todoItems.appendChild(newTodo);
-        }
-
-        function deleteTodo() {
-            const todoItems = document.querySelector('.todoitems');
-            const todos = todoItems.querySelectorAll('.todoitem');
-            todos.forEach(todo => {
-                const checkbox = todo.querySelector('.todo_checkbox');
-                if (checkbox.checked) {
-                    todoItems.removeChild(todo);
+            // XHR 요청이 완료될 때까지 페이지가 닫히지 않도록 설정
+            window.addEventListener('beforeunload', function (event) {
+                // XHR 요청이 완료되지 않았다면 경고 메시지 표시
+                if (xhr.readyState !== XMLHttpRequest.DONE) {
+                    event.preventDefault(); // 페이지 닫힘을 막음
+                    event.returnValue = ''; // 크로스 브라우징을 위한 경고 메시지 설정
                 }
             });
         }
@@ -88,8 +145,8 @@
                 <button type="button" class="todobutton_del" onclick="deleteTodo()">del</button>
             </div>
             <div class="todoitems">
+                <%-- Load existing todo items from the database --%>
                 <%
-                    // 세션에서 사용자 ID 가져오기
                     Integer memberId = (Integer) session.getAttribute("memberId");
                     if (memberId != null) {
                         Connection conn = null;
@@ -110,12 +167,11 @@
                                 String state = rs.getString("STATE");
                                 String deadline = rs.getString("DEADLINE");
                                 boolean isChecked = "DONE".equals(state);
-
                 %>
                 <div class="todoitem">
                     <input type="checkbox" class="todo_checkbox" <%= isChecked ? "checked" : "" %>>
                     <input type="text" class="todo_input" value="<%= name %>">
-                    <input type="text" class="deadline_input" value="<%= deadline %>">
+                    <input type="text" class="deadline_input" value="<%= deadline %>" oninput="handleInput(event)">
                 </div>
                 <%
                             }

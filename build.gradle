@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.7.2'
 }
 dependencies {
-    implementation 'org.json:json:20210307' // 라이브러리의 버전을 적절히 지정하세요
+    implementation 'org.json:json:20210307'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 test {
