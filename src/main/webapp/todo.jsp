@@ -97,7 +97,7 @@
                         ResultSet rs = null;
                         try {
                             Class.forName("org.sqlite.JDBC");
-                            String dbFilePath = "C:/intelliJ/JSPAssignment-develop/identifier.sqlite"; // 실제 SQLite 파일 경로로 변경 필요
+                            String dbFilePath = "C:/intelliJ/JSPAssignment-develop/identifier.sqlite";
                             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFilePath);
 
                             String sql = "SELECT NAME, STATE, DEADLINE FROM todo WHERE OWNER_ID = ?";

@@ -27,7 +27,7 @@
 
         try {
             Class.forName("org.sqlite.JDBC");
-            String dbFilePath = "C:/intelliJ/JSPAssignment-develop/identifier.sqlite"; // 실제 SQLite 파일 경로와 파일명으로 변경 필요
+            String dbFilePath = "C:/intelliJ/JSPAssignment-develop/identifier.sqlite";
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFilePath);
 
             // 기존 TODO 항목 삭제 (옵션: 사용자의 기존 TODO 항목을 모두 삭제하고 새로 추가하는 방식)
