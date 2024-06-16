@@ -73,6 +73,7 @@
                 <input type="text" class="deadline_input" placeholder="YYYY-MM-DD hh:mm" oninput="handleInput(event)">
             `;
             todoItems.appendChild(newTodo);
+            saveDataToServer(); // 서버에 데이터를 저장
         }
 
         function deleteTodo() {
@@ -84,6 +85,7 @@
                     todoItems.removeChild(todo);
                 }
             });
+            saveDataToServer(); // 서버에 데이터를 저장
         }
 
         function saveDataToServer() {
@@ -102,17 +104,9 @@
                 }
             });
 
-            // 데이터를 JSON 문자열로 변환
             const jsonData = JSON.stringify(todoData);
-
-            // sendBeacon을 사용하여 데이터를 전송
             navigator.sendBeacon('todo_info.jsp', jsonData);
         }
-
-        // 페이지가 언로드되기 전에 데이터를 서버에 저장
-        window.addEventListener('beforeunload', function (event) {
-            saveDataToServer();
-        });
     </script>
 </head>
 <body>
