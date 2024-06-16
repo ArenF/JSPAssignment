@@ -145,7 +145,7 @@
                         ResultSet rs = null;
                         try {
                             Class.forName("org.sqlite.JDBC");
-                            String dbFilePath = "C:/intelliJ/JSPAssignment-develop/identifier.sqlite";
+                            String dbFilePath = "D:\\IntelliJ_workspace\\JSP\\JSPAssignment\\identifier.sqlite";
                             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFilePath);
 
                             String sql = "SELECT NAME, STATE, DEADLINE FROM todo WHERE OWNER_ID = ?";

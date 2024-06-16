@@ -52,8 +52,6 @@ w
 G.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e,a\e\ae9ddf453f55affea2d6b9e3973cac1eb2efb4e1
 7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
-S
-#.idea/runConfigurations/Tomcat_.xml,6\8\6895759aeba69d498384d976167d9ba3501b5e51
 ;
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 7
@@ -64,5 +62,15 @@ A
 identifier.sqlite,5\7\57eb79cd3d4a5ae040525478ea4fe859974bbc3c
 H
 src/main/webapp/test.jsp,2\7\2794cd4f47feb7b38b89b4a34cc3a594b17aac16
+H
+src/main/webapp/todo.jsp,5\6\5643a402a1599dfbab65c0055419985fa78ce041
 I
-src/main/webapp/todo.html,f\8\f8d37dceb611a51ec664429baf335cf52334c6d0
+src/main/webapp/style.css,b\5\b5ddf58625eb7ca70f6133d70f13d616e61eadd7
+J
+src/main/webapp/login.html,0\b\0b2312482180eaf8cdf639b64798129ced9aa403
+H
+src/main/webapp/main.jsp,3\7\37a7e7efd6aa64ede7eb56f2f71c420a37050399
+L
+src/main/webapp/sign_up.html,1\7\17838cb9192bcf7712ff53d40c14c520a61e07bb
+M
+src/main/webapp/todo_info.jsp,f\9\f918b6d1ade76ea927048aab7204588340675b84
