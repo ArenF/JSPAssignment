@@ -102,20 +102,17 @@
                 }
             });
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'todo_info.jsp', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(todoData));
+            // 데이터를 JSON 문자열로 변환
+            const jsonData = JSON.stringify(todoData);
 
-            // XHR 요청이 완료될 때까지 페이지가 닫히지 않도록 설정
-            window.addEventListener('beforeunload', function (event) {
-                // XHR 요청이 완료되지 않았다면 경고 메시지 표시
-                if (xhr.readyState !== XMLHttpRequest.DONE) {
-                    event.preventDefault(); // 페이지 닫힘을 막음
-                    event.returnValue = ''; // 크로스 브라우징을 위한 경고 메시지 설정
-                }
-            });
+            // sendBeacon을 사용하여 데이터를 전송
+            navigator.sendBeacon('todo_info.jsp', jsonData);
         }
+
+        // 페이지가 언로드되기 전에 데이터를 서버에 저장
+        window.addEventListener('beforeunload', function (event) {
+            saveDataToServer();
+        });
     </script>
 </head>
 <body>
