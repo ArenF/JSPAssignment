@@ -32,7 +32,7 @@
                         </button>
                     </a>
                 </div>
-                <a href="login.html">
+                <a href="login.jsp">
                     <button type="button" class="header_button_login">
                         login/sign up
                     </button>
