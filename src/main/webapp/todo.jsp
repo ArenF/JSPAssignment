@@ -1,6 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="java.util.*" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+
+<%
+    Integer memberId = (Integer) session.getAttribute("memberId");
+    if (memberId == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +31,7 @@
             const value = input.value;
             const regex = /^[0-9-:\s]*$/;
             if (!regex.test(value)) {
-                alert("날짜/시간 형식은 YYYY-MM-DD hh:mm이어야 합니다.");
+                alert("숫자만 입력 가능합니다.");
                 input.value = "";
                 return;
             }
@@ -63,6 +72,44 @@
             return formattedValue;
         }
 
+        function saveDataToServer() {
+            const todoItems = document.querySelectorAll('.todoitem');
+            const todoData = [];
+            todoItems.forEach(todo => {
+                const todoInput = todo.querySelector('.todo_input');
+                const checkbox = todo.querySelector('.todo_checkbox');
+                const deadlineInput = todo.querySelector('.deadline_input');
+
+                if (todoInput.value.trim()) {
+                    const state = checkbox.checked ? "DONE" : "PENDING";
+                    const deadline = deadlineInput.value.trim();
+
+                    todoData.push({
+                        todoItem: todoInput.value.trim(),
+                        state: state,
+                        deadline: deadline
+                    });
+                }
+            });
+
+            const jsonData = JSON.stringify(todoData);
+            console.log("Sending data to server:", jsonData);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "todo_info.jsp", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("Data saved successfully");
+                } else if (xhr.readyState === 4) {
+                    console.error("Error saving data:", xhr.responseText);
+                }
+            };
+            xhr.send(jsonData);
+        }
+
+        window.addEventListener('beforeunload', saveDataToServer);
+
         function addTodo() {
             const todoItems = document.querySelector('.todoitems');
             const newTodo = document.createElement('div');
@@ -70,10 +117,9 @@
             newTodo.innerHTML = `
                 <input type="checkbox" class="todo_checkbox">
                 <input type="text" class="todo_input" placeholder="할 일을 입력하세요">
-                <input type="text" class="deadline_input" placeholder="YYYY-MM-DD hh:mm" oninput="handleInput(event)">
+                <input type="text" class="deadline_input" placeholder="YYYY-MM-DD hh:mm" oninput="handleInput(event)" onblur="validateDeadline(this)">
             `;
             todoItems.appendChild(newTodo);
-            saveDataToServer(); // 서버에 데이터를 저장
         }
 
         function deleteTodo() {
@@ -85,27 +131,7 @@
                     todoItems.removeChild(todo);
                 }
             });
-            saveDataToServer(); // 서버에 데이터를 저장
-        }
-
-        function saveDataToServer() {
-            const todoItems = document.querySelectorAll('.todoitem');
-            const todoData = [];
-            todoItems.forEach(todo => {
-                const checkbox = todo.querySelector('.todo_checkbox');
-                const todoInput = todo.querySelector('.todo_input');
-                const deadlineInput = todo.querySelector('.deadline_input');
-                if (todoInput.value) {
-                    todoData.push({
-                        todoItem: todoInput.value,
-                        deadline: deadlineInput.value,
-                        state: checkbox.checked ? "DONE" : "PENDING"
-                    });
-                }
-            });
-
-            const jsonData = JSON.stringify(todoData);
-            navigator.sendBeacon('todo_info.jsp', jsonData);
+            saveDataToServer();
         }
     </script>
 </head>
@@ -113,16 +139,12 @@
 <div class="all">
     <div class="header">
         <div class="header_button">
-            Github
+            <a href="https://github.com">Github</a>
         </div>
         <div class="header_item">
-            <div>
-                <a href="main.jsp" class="header_button">main</a>
-            </div>
-            <div>
-                <a href="todo.jsp" class="header_button">todo</a>
-            </div>
-            <a href="login.html" class="header_button_login">login/sign up</a>
+            <a href="main.jsp" class="header_button">main</a>
+            <a href="todo.jsp" class="header_button">todo</a>
+            <a href="login.jsp" class="header_button_login">login/sign up</a>
         </div>
     </div>
 
@@ -136,43 +158,39 @@
                 <button type="button" class="todobutton_del" onclick="deleteTodo()">del</button>
             </div>
             <div class="todoitems">
-                <%-- Load existing todo items from the database --%>
                 <%
-                    Integer memberId = (Integer) session.getAttribute("memberId");
-                    if (memberId != null) {
-                        Connection conn = null;
-                        PreparedStatement pstmt = null;
-                        ResultSet rs = null;
-                        try {
-                            Class.forName("org.sqlite.JDBC");
-                            String dbFilePath = "D:\\IntelliJ_workspace\\JSP\\JSPAssignment\\identifier.sqlite";
-                            conn = DriverManager.getConnection("jdbc:sqlite:" + dbFilePath);
+                    Connection conn = null;
+                    PreparedStatement pstmt = null;
+                    ResultSet rs = null;
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        String dbFilePath = "jdbc:sqlite:D:\\IntelliJ_workspace\\JSP\\JSPAssignment\\identifier.sqlite";
+                        conn = DriverManager.getConnection(dbFilePath);
 
-                            String sql = "SELECT NAME, STATE, DEADLINE FROM todo WHERE OWNER_ID = ?";
-                            pstmt = conn.prepareStatement(sql);
-                            pstmt.setInt(1, memberId);
-                            rs = pstmt.executeQuery();
+                        String sql = "SELECT NAME, STATE, DEADLINE FROM todo WHERE OWNER_ID = ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setInt(1, memberId);
+                        rs = pstmt.executeQuery();
 
-                            while (rs.next()) {
-                                String name = rs.getString("NAME");
-                                String state = rs.getString("STATE");
-                                String deadline = rs.getString("DEADLINE");
-                                boolean isChecked = "DONE".equals(state);
+                        while (rs.next()) {
+                            String name = rs.getString("NAME");
+                            String state = rs.getString("STATE");
+                            boolean isChecked = state.startsWith("DONE");
+                            String deadline = rs.getString("DEADLINE");
                 %>
-                <div class="todoitem">
-                    <input type="checkbox" class="todo_checkbox" <%= isChecked ? "checked" : "" %>>
+                <div class="todoitem check_wrap">
+                    <input type="checkbox" id="check_btn" class="todo_checkbox" <%= isChecked ? "checked" : "" %>>
                     <input type="text" class="todo_input" value="<%= name %>">
-                    <input type="text" class="deadline_input" value="<%= deadline %>" oninput="handleInput(event)">
+                    <input type="text" class="deadline_input" value="<%= deadline %>" oninput="handleInput(event)" onblur="validateDeadline(this)">
                 </div>
                 <%
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                            if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
                     }
                 %>
             </div>

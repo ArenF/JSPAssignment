@@ -28,10 +28,11 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
     implementation 'org.xerial:sqlite-jdbc:3.36.0.1'
-}
-dependencies {
     implementation 'org.json:json:20210307'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.0.8'
 }
 test {
     useJUnitPlatform()
