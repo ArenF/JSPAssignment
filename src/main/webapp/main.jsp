@@ -41,11 +41,6 @@
                     logout
                 </button>
             </a>
-            <a href="delete_member.jsp">
-                <button type="button" class="header_button_login">
-                    resign
-                </button>
-            </a>
             <%
             } else {
             %>
