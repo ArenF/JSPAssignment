@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인화면</title>
     <link rel="stylesheet" ; href="style.css" ;>
+    <script>
+        function shortcut() {
+            window.location.href = "todo.jsp";
+        }
+
+    </script>
 </head>
 <body>
     <div class="all">
@@ -32,7 +38,7 @@
                         </button>
                     </a>
                 </div>
-                <a href="login.html">
+                <a href="login.jsp">
                     <button type="button" class="header_button_login">
                         login/sign up
                     </button>
@@ -41,8 +47,8 @@
         </div>
 
         <div class="content_main">
-            <button type="button" class="header_button">
-                중앙버튼
+            <button type="button" id="goto_button" onclick="shortcut()" class="header_button" >
+                바로가기
             </button>
         </div>
     </div>
