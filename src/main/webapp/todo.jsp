@@ -21,7 +21,6 @@
         function validateDeadline(input) {
             const regex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
             if (!regex.test(input.value)) {
-                alert("날짜/시간 형식은 YYYY-MM-DD hh:mm이어야 합니다.");
                 input.value = "";
             }
         }
@@ -108,7 +107,10 @@
             xhr.send(jsonData);
         }
 
-        window.addEventListener('beforeunload', saveDataToServer);
+        window.addEventListener('beforeunload', function (event) {
+            saveDataToServer();
+            console.log('Before unload event triggered');
+        });
 
         function addTodo() {
             const todoItems = document.querySelector('.todoitems');
@@ -144,7 +146,30 @@
         <div class="header_item">
             <a href="main.jsp" class="header_button">main</a>
             <a href="todo.jsp" class="header_button">todo</a>
-            <a href="login.jsp" class="header_button_login">login/sign up</a>
+            <%
+                if (memberId != null) {
+            %>
+            <a href="logout.jsp">
+                <button type="button" class="header_button_login">
+                    logout
+                </button>
+            </a>
+            <a href="delete_member.jsp">
+                <button type="button" class="header_button_login">
+                    resign
+                </button>
+            </a>
+            <%
+            } else {
+            %>
+            <a href="login.jsp">
+                <button type="button" class="header_button_login">
+                    login/sign up
+                </button>
+            </a>
+            <%
+                }
+            %>
         </div>
     </div>
 
@@ -199,3 +224,4 @@
 </div>
 </body>
 </html>
+
